@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yohaeng.gwangju.mapper.FoodMapper">
+
+    <!--  음식 리스트 조회  -->
+    <select id="foodlist" resultType="com.yohaeng.gwangju.model.FoodDTO">
+        SELECT id, title, sigungucode, addr1, tel, cat1, rating, review_cnt FROM food WHERE 1=1
+        <if test="title != null and title != ''"> AND title LIKE CONCAT('%', #{title}, '%') </if>
+        <if test="sigunguCode != null and sigunguCode != ''"> AND sigungucode = #{sigunguCode} </if>
+        <if test="addr1 != null and addr1 != ''"> AND addr1 LIKE CONCAT('%', #{addr1}, '%') </if>
+        <if test="addr2 != null and addr2 != ''"> AND addr2 LIKE CONCAT('%', #{addr2}, '%') </if>
+        <if test="cat1 != null and cat1 != ''"> AND cat1 = #{cat1} </if>
+        <if test="reviewCnt != null"> AND review_cnt >= #{reviewCnt} </if>
+        <if test="rating != null"> AND rating >= #{rating} </if>
+        <!--  정렬 조건  -->
+        <choose>
+            <when test="sortType == 'review'"> ORDER BY review_cnt DESC, rating DESC </when>
+            <when test="sortType == 'rating'"> ORDER BY rating DESC, review_cnt DESC </when>
+            <otherwise> ORDER BY rating DESC, review_cnt DESC </otherwise>
+        </choose>
+        LIMIT #{offset}, #{size}
+    </select>
+    <!--  음식 리스트 총 개수 조회  -->
+    <select id="countFoodList" resultType="int">
+        SELECT COUNT(*) FROM food WHERE 1=1
+        <if test="title != null and title != ''"> AND title LIKE CONCAT('%', #{title}, '%') </if>
+        <if test="sigunguCode != null and sigunguCode != ''"> AND sigungucode = #{sigunguCode} </if>
+        <if test="addr1 != null and addr1 != ''"> AND addr1 LIKE CONCAT('%', #{addr1}, '%') </if>
+        <if test="addr2 != null and addr2 != ''"> AND addr2 LIKE CONCAT('%', #{addr2}, '%') </if>
+        <if test="cat1 != null and cat1 != ''"> AND cat1 = #{cat1} </if>
+        <if test="reviewCnt != null"> AND review_cnt >= #{reviewCnt} </if>
+        <if test="rating != null"> AND rating >= #{rating} </if>
+    </select>
+
+    <!--  특정 음식 조회  -->
+    <select id="getFoodDetail" parameterType="int" resultType="com.yohaeng.gwangju.model.FoodDTO">
+        SELECT id, title, addr1, addr2, image, tel, cat1, cat2, rating, review_cnt, mapx, mapy, sigungucode FROM food WHERE id = #{id}
+    </select>
+
+
+    <!-- 검색 쿼리 추가 -->
+    <select id="searchByKeywordAndSigungu" resultType="com.yohaeng.gwangju.model.FoodDTO">
+        SELECT * FROM food
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (title LIKE CONCAT('%', #{keyword}, '%') OR addr1 LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="sigunguCode != null and sigunguCode != ''">
+                AND sigunguCode = #{sigunguCode}
+            </if>
+        </where>
+        ORDER BY rating DESC, review_cnt DESC
+    </select>
+
+
+
+</mapper>
