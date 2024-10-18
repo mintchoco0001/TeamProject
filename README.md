@@ -1,4 +1,6 @@
-
+<div align="center">
+  <a href="README_JP.md">日本語</a>
+</div>
   
 
 # TeamProject - 음식점 조회 및 상세 정보 시스템
