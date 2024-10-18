@@ -320,13 +320,13 @@ google.maps.api.key=YOUR_API_KEY
 
 ### 음식점 목록 페이지
 
-![음식점 리스트](./screenshots/food-list.png)
+![음식점 리스트](./foodlist.png)
 
   
 
 ### 음식점 상세 정보 페이지
 
-![음식점 상세](./screenshots/food-detail.png)
+![음식점 상세](./fooddetail.png)
 
   
 
@@ -665,13 +665,13 @@ google.maps.api.key=YOUR_API_KEY
 
 ### レストランリストページ
 
-![レストランリスト](./screenshots/food-list.png)
+![レストランリスト](./foodlist.png)
 
   
 
 ### レストラン詳細情報ページ
 
-![レストラン詳細](./screenshots/food-detail.png)
+![レストラン詳細](./fooddetail.png)
 
   
 
